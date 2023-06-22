@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="{{.Lang}}" title="{{.Name}}" style="height: 100%;">
+
+<head>
+  {{ range .HeadElements }}
+  {{- . }}
+  {{ end }}
+
+  <script>
+    history.pushState(null, null, null);
+    window.addEventListener("popstate", (e) => {
+      history.pushState(null, null, null);
+      e.preventDefault();
+    });
+  </script>
+
+  <script src="turbo.es2017-umd.js"></script>
+
+  <script>
+    let protocol = "ws";
+    if (location.protocol === 'https:') {
+        protocol = 'wss';
+    }
+
+    let url = protocol + "://" + location.host + location.pathname
+    const ws = new WebSocket(url + "ws");
+    Turbo.session.connectStreamSource(ws);
+
+    function makeListener(eventName, propName) {
+      return function (e) {
+        const parts = e.target.id.split("-");
+        if (!(parts.length == 2 && parts[0] == "wasabi")) {
+          return
+        }
+        if (propName == "") {
+          props = {}
+        } else {
+          props = { [propName]: e.target[propName] }
+        }
+        ev = {
+          target: parts[1],
+          event: eventName,
+          props: props,
+        };
+        ws.send(JSON.stringify(ev))
+      }
+    }
+
+    ws.onopen = function (e) {
+      {{range.Events}}
+      document.addEventListener("{{.Name}}", makeListener("{{.Name}}", "{{.PropName}}"));
+      {{end}}
+    };
+    window.onbeforeunload = function () {
+      Turbo.session.disconnectStreamSource(ws);
+      ws.close();
+    }
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{.Name}}</title>
+</head>
+
+<body style="height: 100%; box-sizing: border-box; padding: 0px; margin: 0px; overflow: auto;">
+  <div id="wasabi-page"></div>
+</body>
+
+</html>
