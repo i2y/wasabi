@@ -103,7 +103,7 @@ go build -ldflags "-H windowsgui" main.go
 ```
 Additionally, you can utilize tools such as [go-winres](https://github.com/tc-hib/go-winres), [rsrc](https://github.com/akavel/rsrc), or [GoVersionInfo](https://github.com/josephspurrier/goversioninfo) to embed resources, like the application icon, into your Windows app.
 
-## Example of Running as a Web App
+## Web App Example
 The source code for running the aforementioned Counter desktop app example as a web application can be found [here](example/web/main.go).
 
 ### Directory Structure
@@ -132,8 +132,7 @@ import (
 var assets embed.FS
 
 func main() {
-    w.MountAssets("counter", assets, true)
-    handler := w.NewHTTPHandler("counter", "/counter", counter)
+    handler := w.NewHTTPHandler("counter", "/counter", counter, w.Assets(assets))
     http.ListenAndServe(":8080", handler)
 }
 
@@ -161,7 +160,7 @@ func counter(f *w.Factory) w.Element {
 }
 ```
 
-The key differences from the desktop app include the use of `w.NewHTTPHandler` instead of `w.NewDesktopApp`, and the application of `w.MountAssets`. In fact, while Wasabi's backend core uses websockets, it is fundamentally just a net/http handler. Wasabi is designed on the premise that it will operate as a net/http handler. This allows for the integration of Wasabi with other frameworks.
+The key differences from the desktop app include the use of `w.NewHTTPHandler` instead of `w.NewDesktopApp`. While Wasabi's backend core uses a websocket, it's fundamentally just a net/http handler. This not only enables users to create web apps using Wasabi, but also allows for the integration of Wasabi with other web frameworks.
 
 ### Build and Run
 ```console
