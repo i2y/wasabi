@@ -172,7 +172,11 @@ func newHTTPHandler(
 	})
 
 	mux.HandleFunc(rootpath+"ws", func(w http.ResponseWriter, r *http.Request) {
-		c, err := websocket.Accept(w, r, nil)
+		c, err := websocket.Accept(w, r, &websocket.AcceptOptions{
+			// It appears that some webview implementations have a bug related to compression,
+			// so we disable compression for now.
+			CompressionMode: websocket.CompressionDisabled,
+		})
 		defer func() {
 			if err != nil {
 				c.Close(websocket.StatusInternalError, "failed to accept websocket connection")
