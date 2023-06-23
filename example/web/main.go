@@ -13,8 +13,7 @@ import (
 var assets embed.FS
 
 func main() {
-	w.MountAssets("counter", assets, true)
-	handler := w.NewHTTPHandler("counter", "/counter", counter)
+	handler := w.NewHTTPHandler("counter", "/counter", counter, w.Assets(assets))
 	http.ListenAndServe(":8080", handler)
 }
 

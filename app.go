@@ -152,7 +152,7 @@ func newHTTPHandler(
 		panic(err)
 	}
 
-	MountAssets("", appOpts.assets, true)
+	mountAssets(".", appOpts.assets, true)
 	assetHandler := http.FileServer(assetsFS)
 	if rootpath[len(rootpath)-1] != '/' {
 		rootpath += "/"
@@ -378,8 +378,8 @@ func SetTargetEvents(events []TargetEvent) {
 
 var assetsFS http.FileSystem
 
-func MountAssets(mountDir string, assets embed.FS, headElementsFlag bool) {
-	assetsLFS, err := fs.Sub(assets, ".")
+func mountAssets(mountDir string, assets embed.FS, headElementsFlag bool) {
+	assetsLFS, err := fs.Sub(assets, mountDir)
 	if err != nil {
 		panic(err)
 	}
@@ -390,33 +390,22 @@ func MountAssets(mountDir string, assets embed.FS, headElementsFlag bool) {
 		return
 	}
 
-	var walkRootDir string
-	if mountDir == "" {
-		walkRootDir = "."
-	} else {
-		walkRootDir = mountDir
-	}
+	err = fs.WalkDir(assetsLFS, ".", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
 
-	err = fs.WalkDir(assetsLFS, walkRootDir, func(path string, d fs.DirEntry, err error) error {
-		relatedPath := path[len(mountDir):]
-		if relatedPath == "" || d.IsDir() {
+		// Skip if it is a directory
+		if d.IsDir() {
 			return nil
 		}
 
-		var filePath string
-		if relatedPath[0] == '/' {
-			filePath = relatedPath[1:]
-		} else {
-			filePath = relatedPath
-		}
-
-		fmt.Println(filePath)
-		ext := filepath.Ext(filePath)
+		ext := filepath.Ext(path)
 		switch ext {
 		case ".css":
-			addHeadElements(fmt.Sprintf(`<link rel="stylesheet" href="%s">`, filePath))
+			addHeadElements(fmt.Sprintf(`<link rel="stylesheet" href="/%s/%s">`, mountDir, path))
 		case ".js":
-			addHeadElements(fmt.Sprintf(`<script src="%s"></script>`, filePath))
+			addHeadElements(fmt.Sprintf(`<script src="/%s/%s"></script>`, mountDir, path))
 		}
 
 		return nil
