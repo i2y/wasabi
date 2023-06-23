@@ -6,7 +6,7 @@ The aim of Wasabi is to provide an exceptional framework that allows Gophers to 
 
 ## Features
 - Wasabi allows you to write HTML/CSS-based UIs in Go. If you have a basic understanding of HTML/CSS, you can quickly and easily create simple desktop applications in Go.
-- Wasabi is compatible with any CSS framework or web component. For example, you can use it in combination with [Shoelace](https://shoelace.style/), [Tailwind CSS](https://tailwindcss.com/), or [daisyUI](https://daisyui.com/).
+- Wasabi is compatible with any CSS framework or web component. For example, you can use it in combination with [Tailwind CSS](https://tailwindcss.com/) and [daisyUI](https://daisyui.com/).
 
 ## A Quick Overview
 This example showcases a simple counter application created using Wasabi.
