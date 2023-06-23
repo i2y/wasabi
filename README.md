@@ -76,7 +76,7 @@ go build main.go
 ```
 
 ### Screen Shot
-<img width="215" alt="Counter" src="![counter' screen shot](screenshot.png)">
+<img width="215" alt="Counter" src="screenshot.png">
 
 ## Dependencies
 Wasabi currently depends on the following packages.
