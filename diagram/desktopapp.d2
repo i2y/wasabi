@@ -23,8 +23,9 @@ WebView: {
   Dom Tree <- Wasabi: Replace
 }
 
-Server: {
-  Wasabi: {
+Wasabi: {
+  Server: {
+    label: HTTP Server
     Group: {
       label: Goroutine
       style.stroke-dash: 5
@@ -43,5 +44,5 @@ Server: {
   }
 }
 
-WebView.Wasabi -> Server.Wasabi.Group."WebSocket Handler": Event
-WebView.Wasabi <- Server.Wasabi.Group."WebSocket Handler": DOM Diff
+WebView.Wasabi -> Wasabi.Server.Group."WebSocket Handler": Event
+WebView.Wasabi <- Wasabi.Server.Group."WebSocket Handler": DOM Diff
