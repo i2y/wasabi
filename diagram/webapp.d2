@@ -39,34 +39,43 @@ BrowserB: {
 }
 
 Server: {
-  WasabiA: {
-    label: Wasabi
-    Goroutine: {
-      shape: image
-      icon: https://icons.terrastruct.com/dev%2Fgo.svg
+  Wasabi: {
+    GroupA: {
+      label: Goroutine
+      style.stroke-dash: 5
+      style.border-radius: 8
+      WebSocket Handler: {
+        shape: image
+        icon: https://icons.terrastruct.com/dev%2Fgo.svg
+      }
+      State: {
+        label: State
+        shape: image
+        icon: https://icons.terrastruct.com/essentials%2F117-database.svg
+      }
+      "WebSocket Handler" <-> State
     }
-    State: {
-      shape: image
-      icon: https://icons.terrastruct.com/essentials%2F117-database.svg
+
+    GroupB: {
+      label: Goroutine
+      style.stroke-dash: 5
+      style.border-radius: 8
+      WebSocket Handler: {
+        shape: image
+        icon: https://icons.terrastruct.com/dev%2Fgo.svg
+      }
+      State: {
+        label: State
+        shape: image
+        icon: https://icons.terrastruct.com/essentials%2F117-database.svg
+      }
+      "WebSocket Handler" <-> State
     }
-    Goroutine <-> State
-  }
-  WasabiB: {
-    label: Wasabi
-    Goroutine: {
-      shape: image
-      icon: https://icons.terrastruct.com/dev%2Fgo.svg
-    }
-    State: {
-      shape: image
-      icon: https://icons.terrastruct.com/essentials%2F117-database.svg
-    }
-    Goroutine <-> State
   }
 }
 
-BrowserA.Wasabi -> Server.WasabiA.Goroutine: Event
-BrowserA.Wasabi <- Server.WasabiA.Goroutine: DOM Diff
+BrowserA.Wasabi -> Server.Wasabi.GroupA."WebSocket Handler": Event
+BrowserA.Wasabi <- Server.Wasabi.GroupA."WebSocket Handler": DOM Diff
 
-BrowserB.Wasabi -> Server.WasabiB.Goroutine: Event
-BrowserB.Wasabi <- Server.WasabiB.Goroutine: DOM Diff
+BrowserB.Wasabi -> Server.Wasabi.GroupB."WebSocket Handler": Event
+BrowserB.Wasabi <- Server.Wasabi.GroupB."WebSocket Handler": DOM Diff

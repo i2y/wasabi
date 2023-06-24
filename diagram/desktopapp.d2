@@ -25,17 +25,23 @@ WebView: {
 
 Server: {
   Wasabi: {
-    Goroutine: {
-      shape: image
-      icon: https://icons.terrastruct.com/dev%2Fgo.svg
+    Group: {
+      label: Goroutine
+      style.stroke-dash: 5
+      style.border-radius: 8
+      WebSocket Handler: {
+        shape: image
+        icon: https://icons.terrastruct.com/dev%2Fgo.svg
+      }
+      State: {
+        label: State
+        shape: image
+        icon: https://icons.terrastruct.com/essentials%2F117-database.svg
+      }
+      "WebSocket Handler" <-> State
     }
-    State: {
-      shape: image
-      icon: https://icons.terrastruct.com/essentials%2F117-database.svg
-    }
-    Goroutine <-> State
   }
 }
 
-WebView.Wasabi -> Server.Wasabi.Goroutine: Event
-WebView.Wasabi <- Server.Wasabi.Goroutine: DOM Diff
+WebView.Wasabi -> Server.Wasabi.Group."WebSocket Handler": Event
+WebView.Wasabi <- Server.Wasabi.Group."WebSocket Handler": DOM Diff
