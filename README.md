@@ -1,12 +1,11 @@
 # Wasabi
-Wasabi is a cross-platform desktop GUI toolkit designed for Gophers.
-
-## Introduction
-The aim of Wasabi is to provide an exceptional framework that allows Gophers to easily create and distribute desktop GUI applications across various operating systems. Experimentally, Wasabi can also be utilized to create single-page web applications that run on a browser.
+Wasabi is a cross-platform UI framework for creating desktop and web applications using only Go.
 
 ## Features
-- Wasabi allows you to write HTML/CSS-based UIs in Go. If you have a basic understanding of HTML/CSS, you can quickly and easily create simple desktop applications in Go.
-- Wasabi is compatible with any CSS framework or web component. For example, you can use it in combination with [Tailwind CSS](https://tailwindcss.com/) and [daisyUI](https://daisyui.com/).
+- Wasabi enables you to create both desktop and web apps using only Go. A little knowledge of HTML/CSS can help.
+- It works seamlessly with CSS frameworks like [Tailwind CSS](https://tailwindcss.com/) and [daisyUI](https://daisyui.com/).
+- It simplifies development by unifying backend and frontend, minimizing data transfer and eliminating the need for JavaScript or APIs.
+- It has declarative UI flavor.
 
 ## A Quick Overview
 This example showcases a simple counter application created using Wasabi.
