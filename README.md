@@ -171,10 +171,11 @@ go build main.go
 You can access the application at `http://localhost:8080/counter`.
 
 ## Architecture
-Wasabi is structured around the following components:
+<img width="600" alt="Desktop App Architecture" src="diagarm/desktopapp.png">
 
-TODO (insert diagram here. I will draw the diagram).
+<img width="600" alt="Web App Architecture" src="diagarm/webapp.png">
 
+The communication between the Go backend and the browser/webview is done via a websocket. The Go backend sends the HTML/CSS/JS code to the browser/webview, and the browser/webview sends the events to the Go backend.
 
 ## License
 [MIT License](https://github.com/i2y/wasabi/blob/main/LICENSE)

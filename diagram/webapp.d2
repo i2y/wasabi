@@ -1,0 +1,72 @@
+direction: right
+
+title: Web App {
+  near: top-center
+  shape: text
+  style: {
+    font-size: 29
+    bold: true
+    underline: true
+  }
+}
+
+BrowserA: {
+  label: Browser
+  DOM Tree: {
+    shape: image
+    icon: https://icons.terrastruct.com/tech%2Fbrowser-2.svg
+  }
+  Wasabi: {
+    shape: image
+    icon: https://icons.terrastruct.com/dev%2Fjavascript.svg
+  }
+  DOM Tree -> Wasabi: Event
+  Dom Tree <- Wasabi: Patch
+}
+
+BrowserB: {
+  label: Browser
+  DOM Tree: {
+    shape: image
+    icon: https://icons.terrastruct.com/tech%2Fbrowser-2.svg
+  }
+  Wasabi: {
+    shape: image
+    icon: https://icons.terrastruct.com/dev%2Fjavascript.svg
+  }
+  DOM Tree -> Wasabi: Event
+  Dom Tree <- Wasabi: Patch
+}
+
+Server: {
+  WasabiA: {
+    label: Wasabi
+    Goroutine: {
+      shape: image
+      icon: https://icons.terrastruct.com/dev%2Fgo.svg
+    }
+    State: {
+      shape: image
+      icon: https://icons.terrastruct.com/essentials%2F117-database.svg
+    }
+    Goroutine <-> State
+  }
+  WasabiB: {
+    label: Wasabi
+    Goroutine: {
+      shape: image
+      icon: https://icons.terrastruct.com/dev%2Fgo.svg
+    }
+    State: {
+      shape: image
+      icon: https://icons.terrastruct.com/essentials%2F117-database.svg
+    }
+    Goroutine <-> State
+  }
+}
+
+BrowserA.Wasabi -> Server.WasabiA.Goroutine: Event
+BrowserA.Wasabi <- Server.WasabiA.Goroutine: DOM Diff
+
+BrowserB.Wasabi -> Server.WasabiB.Goroutine: Event
+BrowserB.Wasabi <- Server.WasabiB.Goroutine: DOM Diff

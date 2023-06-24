@@ -1,0 +1,41 @@
+direction: right
+
+title: Desktop App {
+  near: top-center
+  shape: text
+  style: {
+    font-size: 29
+    bold: true
+    underline: true
+  }
+}
+
+WebView: {
+  DOM Tree: {
+    shape: image
+    icon: https://icons.terrastruct.com/tech%2Fbrowser-2.svg
+  }
+  Wasabi: {
+    shape: image
+    icon: https://icons.terrastruct.com/dev%2Fjavascript.svg
+  }
+  DOM Tree -> Wasabi: Event
+  Dom Tree <- Wasabi: Replace
+}
+
+Server: {
+  Wasabi: {
+    Goroutine: {
+      shape: image
+      icon: https://icons.terrastruct.com/dev%2Fgo.svg
+    }
+    State: {
+      shape: image
+      icon: https://icons.terrastruct.com/essentials%2F117-database.svg
+    }
+    Goroutine <-> State
+  }
+}
+
+WebView.Wasabi -> Server.Wasabi.Goroutine: Event
+WebView.Wasabi <- Server.Wasabi.Goroutine: DOM Diff
