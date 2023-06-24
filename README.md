@@ -4,7 +4,7 @@ Wasabi is a cross-platform UI framework for creating desktop and web application
 ## Features
 - Wasabi enables you to create both desktop and web apps using only Go. A little knowledge of HTML/CSS can help.
 - It works seamlessly with CSS frameworks like [Tailwind CSS](https://tailwindcss.com/) and [daisyUI](https://daisyui.com/).
-- It simplifies development by unifying backend and frontend, minimizing data transfer and eliminating the need for JavaScript or APIs.
+- It simplifies development by unifying backend and frontend, minimizing data transfer and eliminating the need for JavaScript or backend APIs.
 - It has declarative UI flavor.
 
 ## A Quick Overview
