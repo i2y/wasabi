@@ -65,8 +65,19 @@ func counter(f *w.Factory) w.Element {
         ),
     )
 }
+```
+
+The following part may be the most important part of the code above.
+
+```go
+f.Reactive(count, func() w.Element {
+    return f.Div(a.Class("text-slate-400 text-4xl w-24 h-24 flex items-center justify-center"))(
+        f.Text(strconv.Itoa(count.Get())),
+    )
+}),
 
 ```
+`wasabi.Reactive` is a function that takes a state and a generator function for an element. Initially, it calls the function with the initial state to make the first element. When the state changes, it makes a new element and replaces the old one calling the function with the updated state.
 
 ### Build and Run
 ```sh
@@ -162,7 +173,7 @@ func counter(f *w.Factory) w.Element {
 The key differences from the desktop app include the use of `w.NewHTTPHandler` instead of `w.NewDesktopApp`. While Wasabi's backend core uses a websocket, it's fundamentally just a net/http handler. This not only enables users to create web apps using Wasabi, but also allows for the integration of Wasabi with other web frameworks.
 
 ### Build and Run
-```console
+```sh
 go build main.go
 ./main
 ```
