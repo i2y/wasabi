@@ -4,6 +4,7 @@ import (
 	"embed"
 	"net/http"
 	"strconv"
+	"time"
 
 	w "github.com/i2y/wasabi"
 	a "github.com/i2y/wasabi/modifier/attr"
@@ -13,7 +14,13 @@ import (
 var assets embed.FS
 
 func main() {
-	handler := w.NewHTTPHandler("counter", "/counter", counter, w.Assets(assets))
+	handler := w.NewHTTPHandler(
+		"counter",
+		"/counter",
+		counter,
+		w.Assets(assets),
+		w.Timeout(10*time.Minute),
+	)
 	http.ListenAndServe(":8080", handler)
 }
 

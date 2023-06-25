@@ -48,21 +48,31 @@ func (app *DesktopApp) Name() string {
 }
 
 type AppOpts struct {
-	lang   language.Tag
-	assets embed.FS
+	lang    language.Tag
+	assets  embed.FS
+	timeout time.Duration
 }
 
 type appOptionModifier func(*AppOpts)
 
+// AppLang sets the language for the application.
 func AppLang(lang language.Tag) appOptionModifier {
 	return func(opts *AppOpts) {
 		opts.lang = lang
 	}
 }
 
+// Assets sets the assets for the application.
 func Assets(assets embed.FS) appOptionModifier {
 	return func(opts *AppOpts) {
 		opts.assets = assets
+	}
+}
+
+// Timeout sets the timeout for the websocket connection.
+func Timeout(d time.Duration) appOptionModifier {
+	return func(opts *AppOpts) {
+		opts.timeout = d
 	}
 }
 
@@ -134,8 +144,9 @@ func newHTTPHandler(
 	mods ...appOptionModifier,
 ) http.Handler {
 	appOpts := &AppOpts{
-		lang:   language.English,
-		assets: embed.FS{},
+		lang:    language.English,
+		assets:  embed.FS{},
+		timeout: 0,
 	}
 
 	for _, mod := range mods {
@@ -186,9 +197,13 @@ func newHTTPHandler(
 			return
 		}
 
-		err = handleWebSocket(r.Context(), c, appCoreFactory)
-		if err != nil {
-			return
+		if appOpts.timeout > 0 {
+			ctx, cancel := context.WithTimeout(r.Context(), appOpts.timeout)
+			defer cancel()
+			handleWebSocket(ctx, c, appCoreFactory)
+		} else {
+			ctx := r.Context()
+			handleWebSocket(ctx, c, appCoreFactory)
 		}
 	})
 	mux.HandleFunc(rootpath+"turbo.es2017-umd.js", func(w http.ResponseWriter, r *http.Request) {
@@ -238,13 +253,17 @@ func handleWebSocket(ctx context.Context, ws *websocket.Conn, appCoreFactory fun
 	}()
 
 	for {
-		msg := <-ac.msgs
-		if msg == EOF {
+		select {
+		case <-ctx.Done():
 			return nil
-		}
-		err = ws.Write(ctx, websocket.MessageText, []byte(msg))
-		if err != nil {
-			return err
+		case msg := <-ac.msgs:
+			if msg == EOF {
+				return nil
+			}
+			err = ws.Write(ctx, websocket.MessageText, []byte(msg))
+			if err != nil {
+				return err
+			}
 		}
 	}
 }
