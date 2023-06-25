@@ -9,7 +9,7 @@ Wasabi is a cross-platform UI framework for creating desktop and web application
 
 ## A Quick Overview
 This example showcases a simple counter application created using Wasabi.
-The source code of this example is available [here](example/desktop/main.go)
+The source code of this example is available [here](example/counter/desktop/main.go)
 
 This example uses [daisyUI](https://daisyui.com/) as a CSS framework.
 
@@ -88,6 +88,10 @@ go build main.go
 ### Screen Shot
 <img width="215" alt="Counter" src="screenshot.png">
 
+### Other Examples
+- [Calcurator](example/calc/main.go)
+- ...
+
 ## Dependencies
 Wasabi currently depends on the following packages.
 Thanks to the creators and contributors of each package.
@@ -114,7 +118,7 @@ go build -ldflags "-H windowsgui" main.go
 Additionally, you can utilize tools such as [go-winres](https://github.com/tc-hib/go-winres), [rsrc](https://github.com/akavel/rsrc), or [GoVersionInfo](https://github.com/josephspurrier/goversioninfo) to embed resources, like the application icon, into your Windows app.
 
 ## Web App Example
-The source code for running the aforementioned Counter desktop app example as a web application can be found [here](example/web/main.go).
+The source code for running the aforementioned Counter desktop app example as a web application can be found [here](example/counter/web/main.go).
 
 ### Directory Structure
 ```
