@@ -89,7 +89,7 @@ go build main.go
 <img width="215" alt="Counter" src="screenshot.png">
 
 ### Other Examples
-- [Calcurator](example/calc/main.go)
+- [Calculator](example/calc/main.go)
 - ...
 
 ## Dependencies
